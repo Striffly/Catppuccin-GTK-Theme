@@ -190,7 +190,7 @@ $nautilus: $base-alt;
 	}
 
 	// for 3.32
-	.linked.nautilus-path-bar
+	.linked.nautilus-pathbar
 		button:not(.suggested-action):not(.destructive-action) {
 		padding-left: ($medium-size - 12px) / 2;
 		padding-right: ($medium-size - 12px) / 2;
@@ -232,7 +232,7 @@ $nautilus: $base-alt;
 }
 
 // >= 42.0
-.windowhandle .linked.nautilus-path-bar {
+.windowhandle .linked.nautilus-pathbar {
 	background-color: $titlebar-fill;
 	border-radius: $corner-radius;
 	margin: $space-size 0;
