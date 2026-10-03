@@ -162,7 +162,15 @@
 // }
 
 #NautilusPathBar,
-.nautilus-pathbar,
+.nautilus-pathbar {
+	background-color: $titlebar-fill;
+	border-radius: $corner-radius;
+}
+
+// The pathbar is 34px tall and sits in the headerbar's title slot, so any vertical
+// margin here lands the Nautilus content-pane bar at 34 + 2 * margin, i.e. 42px against
+// `$large-size`'s 38px. The sidebar's headerbar has no pathbar, which is why only the
+// content pane was affected.
 box > button {
 	background-color: $titlebar-fill;
 	border-radius: $corner-radius;

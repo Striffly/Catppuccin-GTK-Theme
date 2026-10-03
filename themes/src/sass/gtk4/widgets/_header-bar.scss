@@ -170,6 +170,9 @@ headerbar {
 	}
 
 	// add vertical margins to common widget on the headerbar to avoid them spanning the whole height
+	// Derived, not `$space-size`: these controls are 34px tall, so 4px per side reaches 42px
+	// and pushes the bar 4px past `$large-size`. The margin may only inset a control, never
+	// grow the bar.
 	entry,
 	spinbutton,
 	splitbutton,
@@ -177,8 +180,8 @@ headerbar {
 	menubutton,
 	stackswitcher,
 	separator:not(.sidebar) {
-		margin-top: $space-size;
-		margin-bottom: $space-size;
+		margin-top: ($large-size - 34px) / 2;
+		margin-bottom: ($large-size - 34px) / 2;
 	}
 
 	menubutton > button,
