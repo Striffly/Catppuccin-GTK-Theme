@@ -407,6 +407,18 @@ window.devel {
  * Windows button *
  ******************/
 
+// macOS variant: the dot is painted on `> image`, never on the button.
+// `windowcontrols` stretches its buttons to the container, and that container can be
+// taller than `headerbar { min-height }`, so a fill on the button renders as a vertical
+// ellipse. The image keeps its natural size, so a dot painted there is 16x16 whatever
+// the container does.
+//
+// `background: none` is repeated per state rather than left to the base rule because
+// `headerbar button:hover/:active` outrank it on specificity, and its
+// `alpha(currentColor, ...)` fill is not invisible: `color: transparent` resolves
+// `currentColor` to `rgba(0,0,0,0)`, so `alpha(currentColor, 0.08)` paints 8% black.
+// GTK resolves the resulting tie by source order, and these rules are emitted after
+// `headerbar button:hover/:active`, so they win at equal specificity.
 %mac_window_button {
 	min-height: 16px;
 	min-width: 16px;
@@ -415,58 +427,32 @@ window.devel {
 	// Must equal `$large-size` in total or the button overflows the headerbar.
 	margin: ($large-size - 16px) / 2 0;
 	color: transparent;
+	background: none;
+	border-radius: 0;
 
-	&.close {
+	> image {
+		// replaces libadwaita's `windowcontrols > button > image` tint and 1px ring
+		background: none;
+		box-shadow: none;
+		border-radius: 100%;
+	}
+
+	&.close > image {
 		background-color: $titlebutton-close;
-
-		&:hover {
-			background-color: $titlebutton-close;
-		}
-
-		&:active {
-			background-color: $titlebutton-close;
-			color: gtkmix($white, $titlebutton-max, 75%);
-		}
-
-		&:backdrop {
-			color: transparent;
-		}
 	}
 
-	&.minimize {
+	&.minimize > image {
 		background-color: $titlebutton-min;
-
-		&:hover {
-			background-color: $titlebutton-min;
-			color: gtkmix($white, $titlebutton-max, 75%);
-		}
-
-		&:active {
-			background-color: $titlebutton-min;
-			color: gtkmix($white, $titlebutton-max, 75%);
-		}
-
-		&:backdrop {
-			color: transparent;
-		}
 	}
 
-	&.maximize {
+	&.maximize > image {
 		background-color: $titlebutton-max;
+	}
 
-		&:hover {
-			background-color: $titlebutton-max;
-			color: gtkmix($white, $titlebutton-max, 75%);
-		}
-
-		&:active {
-			background-color: $titlebutton-max;
-			color: gtkmix($white, $titlebutton-max, 75%);
-		}
-
-		&:backdrop {
-			color: transparent;
-		}
+	&:hover,
+	&:active {
+		color: gtkmix($white, $titlebutton-max, 75%);
+		background: none;
 	}
 }
 
