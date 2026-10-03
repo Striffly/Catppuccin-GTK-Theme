@@ -457,6 +457,16 @@ window.devel {
 		color: gtkmix($white, $titlebutton-max, 75%);
 		background: none;
 	}
+
+	// `headerbar button:backdrop` sets a dimmed colour and outranks the base
+	// `color: transparent` above, so the minimise/close glyphs showed up when the window
+	// was unfocused. The role classes are needed to outrank it on specificity rather than
+	// on source order.
+	&.close:backdrop,
+	&.minimize:backdrop,
+	&.maximize:backdrop {
+		color: transparent;
+	}
 }
 
 %normal_window_button {
