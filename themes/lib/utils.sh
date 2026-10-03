@@ -226,6 +226,13 @@ interactive_menu() {
 
         # Read arrow and enter key inputs
         read -rsn3 key
+        # Drop keys the user typed ahead of the prompt. Without this they stay
+        # buffered in the tty and the shell replays them as empty commands
+        # after we exit. -t 0 must be avoided here: it returns success
+        # immediately and spins instead of draining.
+        for _ in {1..64}; do
+            read -rsn1 -t 0.05 _discard || break
+        done
         case "$key" in
             $'\e[A') selected=$(( (selected - 1 + ${#options[@]}) % ${#options[@]} )) ;;
             $'\e[B') selected=$(( (selected + 1) % ${#options[@]} )) ;;
