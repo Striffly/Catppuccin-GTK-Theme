@@ -6,7 +6,9 @@
 	min-height: 16px;
 	min-width: 16px;
 	padding: 0;
-	margin: 16px 0;
+	// 16px = the icon only; this placeholder sets no padding on `> image`.
+	// Must equal `$large-size` in total or the button overflows the headerbar.
+	margin: ($large-size - 16px) / 2 0;
 	color: transparent;
 
 	&.close {
@@ -68,7 +70,8 @@
 	min-height: 16px;
 	min-width: 16px;
 	padding: 0;
-	margin: 16px 0;
+	// 20px = 16px icon + 2px `> image` padding per side (see `&.minimize` below).
+	margin: ($large-size - 20px) / 2 0;
 
 	&.minimize,
 	&.maximize,
