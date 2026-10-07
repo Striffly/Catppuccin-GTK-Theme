@@ -129,7 +129,7 @@ run_installation() {
         MENU_RESULT=1
     else
         MENU_NOTE="You will manually apply the theme as explained in the documentation"
-        interactive_menu "Do you want to apply Vague?" "Yes : Automatic installation" "No  : Manual installation"
+        interactive_menu "Do you want to apply ${name:-$THEME_NAME}?" "Yes : Automatic installation" "No  : Manual installation"
     fi
 
     if [[ $MENU_RESULT -eq 0 ]]; then
