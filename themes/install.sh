@@ -270,8 +270,8 @@ apply_theme_settings() {
         # XFCE Session Integration
         printf "\r\033[K│ %-27s : '%s'\n" "Setting XFWM4 theme to path" "${display_dest}/${THEME_FULL_NAME}/xfwm4"
         if has_command xfconf-query; then
-            run_safe xfconf-query -c xsettings -p /Net/ThemeName -s "${THEME_FULL_NAME}"
-            run_safe xfconf-query -c xfwm4 -p /general/theme -s "${THEME_FULL_NAME}"
+            run_safe xfconf-query -c xsettings -p /Net/ThemeName --create -t string -s "${THEME_FULL_NAME}"
+            run_safe xfconf-query -c xfwm4 -p /general/theme --create -t string -s "${THEME_FULL_NAME}"
         fi
     fi
 
