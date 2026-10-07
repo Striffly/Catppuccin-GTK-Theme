@@ -217,11 +217,20 @@ apply_theme_settings() {
     local desktop="${XDG_CURRENT_DESKTOP:-}"
     desktop="${desktop,,}"
 
-    if [[ "${desktop}" == *"cinnamon"* ]] || (has_command gsettings && gsettings list-schemas | grep -q "org.cinnamon.desktop.interface"); then
+    # Trust the session's own desktop name first: the probes below only tell
+    # which DE packages are installed, not which one is running
+    if [[ -n "${desktop}" ]]; then
+        case "${desktop}" in
+            *cinnamon*) is_cinnamon=true ;;
+            *mate*)     is_mate=true ;;
+            *xfce*)     is_xfce=true ;;
+            *)          is_gnome=true ;;
+        esac
+    elif has_command gsettings && gsettings list-schemas | grep -q "org.cinnamon.desktop.interface"; then
         is_cinnamon=true
-    elif [[ "${desktop}" == *"mate"* ]] || (has_command gsettings && gsettings list-schemas | grep -q "org.mate.interface"); then
+    elif has_command gsettings && gsettings list-schemas | grep -q "org.mate.interface"; then
         is_mate=true
-    elif [[ "${desktop}" == *"xfce"* ]] || has_command xfconf-query; then
+    elif has_command xfconf-query; then
         is_xfce=true
     else
         is_gnome=true # Default fallback to GNOME
